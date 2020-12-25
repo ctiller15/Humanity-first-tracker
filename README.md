@@ -5,10 +5,8 @@
 Install all the packages:
 
 ```
-	python -m venv virtualenv
-
-	pip install -r requirements.txt
-
+python -m venv virtualenv
+pip install -r requirements.txt
 ```
 
 Run the tests
