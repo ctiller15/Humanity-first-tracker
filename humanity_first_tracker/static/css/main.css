@@ -1,0 +1,18 @@
+body {
+	margin-bottom: 15em;
+}
+
+.card .list-group-item:hover {
+	background-color: blue;
+	color: white;
+}
+
+footer a {
+	color: #FFFFFF;
+}
+
+@media screen and (min-width: 1080px) {
+	body {
+		margin-bottom: 6em;
+	}
+}

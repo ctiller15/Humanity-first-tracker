@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'humanity_first_tracker',
     'articles',
     'feed_reader.apps.FeedReaderConfig',
 ]
