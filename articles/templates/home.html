@@ -3,7 +3,8 @@
 {% block page_content %}
 <div class="container">
 	<div class="row">
-		<div class='card col-sm-12 col-md-4'>
+		<div class='col-sm-12 col-md-4'>
+			<div class='card'>
 			<div class='card-header'>Yang</div>
 			<ul class="list-group list-group-flush">
 			{% for article in articles.yang %}
@@ -13,8 +14,10 @@
 				</li>
 			{% endfor %}
 			</ul>
+			</div>
 		</div>
-		<div class='card col-sm-12 col-md-4'>
+		<div class='col-sm-12 col-md-4'>
+			<div class="card">
 			<div class='card-header'>Ubi</div>
 			<ul class="list-group list-group-flush">
 			{% for article in articles.ubi %}
@@ -24,8 +27,10 @@
 				</li>
 			{% endfor %}
 			</ul>
+			</div>
 		</div>
-		<div class='card col-sm-12 col-md-4'>
+		<div class='col-sm-12 col-md-4'>
+			<div class="card">
 			<div class='card-header'>Automation</div>
 			<ul class="list-group list-group-flush">
 				{% for article in articles.automation %}
@@ -35,6 +40,7 @@
 				</li>
 				{% endfor %}
 			</ul>
+			</div>
 		</div>
 	</div>
 </div>
