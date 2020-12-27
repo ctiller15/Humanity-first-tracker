@@ -25,7 +25,7 @@ class TestArticles(TestCase):
         new_category = create_category(category_name)
         new_article = create_article(new_category)
 
-        url = reverse('articles.views.home_page')
+        url = reverse('articles.views.home')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)

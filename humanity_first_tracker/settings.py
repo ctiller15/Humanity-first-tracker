@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'articles',
     'feed_reader.apps.FeedReaderConfig',
 ]
 
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'humanity_first_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["humanity_first_tracker/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
