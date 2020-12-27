@@ -2,13 +2,15 @@ from django.shortcuts import render
 from feed_reader.models import Entry, Category
 
 def home(request):
-    categories = Category.objects.all()
-    print(categories)
-
-    entries = Entry.objects.all()
-    print(entries)
+    ubiEntries = Entry.objects.filter(category__name='ubi')
+    yangEntries = Entry.objects.filter(category__name='andrew_yang')
+    automationEntries = Entry.objects.filter(category__name='automation')
 
     context = {
-        'articles': entries
+        'articles': {
+            'ubi': ubiEntries,
+            'yang': yangEntries,
+            'automation': automationEntries,
+        }
     }
     return render(request, 'home.html', context)

@@ -1,8 +1,41 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-<h1>Hello world!</h1>
-	{% for article in articles %}
-	<h2>{{ article.title }}</h2>
-	{% endfor %}
+<div class="container">
+	<div class="row">
+		<div class='card col-sm-12 col-md-4'>
+			<div class='card-header'>Yang</div>
+			<ul class="list-group list-group-flush">
+			{% for article in articles.yang %}
+				<li class="list-group-item">
+					<a href={{ article.link }}
+					target='_blank'>{{article.title}}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class='card col-sm-12 col-md-4'>
+			<div class='card-header'>Ubi</div>
+			<ul class="list-group list-group-flush">
+			{% for article in articles.ubi %}
+				<li class="list-group-item">
+					<a href={{ article.link }}
+					target='_blank'>{{article.title}}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class='card col-sm-12 col-md-4'>
+			<div class='card-header'>Automation</div>
+			<ul class="list-group list-group-flush">
+				{% for article in articles.automation %}
+				<li class="list-group-item">
+					<a href={{ article.link }}
+					target='_blank'>{{article.title}}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
 {% endblock %}

@@ -15,6 +15,7 @@ def create_article(category):
     link = f'link{unique_identifier}'
     link_dirty = f'link_dirty{unique_identifier}'
     new_entry = Entry.objects.create(title=title, link=link, link_dirty=link_dirty, category=category, published=datetime.now(), updated=datetime.now())
+    new_entry.save()
     return new_entry 
 
 # Split into unit tests and integration tests
@@ -25,10 +26,10 @@ class TestArticles(TestCase):
         new_category = create_category(category_name)
         new_article = create_article(new_category)
 
-        url = reverse('articles.views.home')
+        url = '/'
         response = self.client.get(url)
+        response_str = str(response.content, 'utf-8')
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn(new_article.title, response.content)
-
-        raise Error('Finish the test!')
+        self.assertIn(new_article.title, str(response.content, 'utf-8'))
+        self.assertIn(new_article.link, response_str)
