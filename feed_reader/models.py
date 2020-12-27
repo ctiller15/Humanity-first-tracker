@@ -2,7 +2,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    last_updated = models.DateTimeField()
+    last_updated = models.DateTimeField(null=True)
 
 class Entry(models.Model):
     title = models.CharField(max_length=300)
