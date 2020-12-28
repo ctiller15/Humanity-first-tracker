@@ -42,12 +42,6 @@ def save_category_model(feed_data, category_name):
 
     updated_date = parse_updated_date(date_parsed)
 
-    print(category.last_updated)
-    print(updated_date)
-    print(created)
-    print(category.last_updated == updated_date)
-    print(updated_date > category.last_updated)
-
     if created:
         category.last_updated = updated_date
         category.save()
