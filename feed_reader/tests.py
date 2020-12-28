@@ -1,5 +1,5 @@
 from django.test import SimpleTestCase
-from feed_reader.feed_job import clean_link, clean_title
+from feed_reader.feed_job import clean_link, clean_bolds
 
 class TestFeedParser(SimpleTestCase):
 
@@ -10,7 +10,7 @@ class TestFeedParser(SimpleTestCase):
 
         for test_case, output in subtests:
             with self.subTest(test_case=test_case):
-                self.assertEqual(output, clean_title(test_case))
+                self.assertEqual(output, clean_bolds(test_case))
 
 
     def test_link_cleaning(self):

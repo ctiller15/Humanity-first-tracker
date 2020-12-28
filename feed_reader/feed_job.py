@@ -32,8 +32,8 @@ def clean_link(dirty_link):
     reg = r'(?<=https:\/\/w{3}\.google\.com\/url\?rct=j&sa=t&url=)(.*)(?=&ct=ga&cd=)'
     return search(reg, dirty_link)[0]
 
-def clean_title(dirty_title):
-    return dirty_title.replace('<b>', '').replace('</b>', '')
+def clean_bolds(dirty_text):
+    return dirty_text.replace('<b>', '').replace('</b>', '')
 
 def save_category_model(feed_data, category_name):
     date_parsed = feed_data['feed']['updated_parsed']
@@ -42,11 +42,17 @@ def save_category_model(feed_data, category_name):
 
     updated_date = parse_updated_date(date_parsed)
 
+    print(category.last_updated)
+    print(updated_date)
+    print(created)
+    print(category.last_updated == updated_date)
+    print(updated_date > category.last_updated)
+
     if created:
         category.last_updated = updated_date
         category.save()
     else:
-        if category.last_updated == updated_date:
+        if category.last_updated >= updated_date:
             return False
         else:
             category.last_updated = updated_date
@@ -70,10 +76,10 @@ def save_entry_models(feed, category_name):
             category_id=saved_category.id)
 
         if created:
-            article.title = clean_title(entry['title'])
+            article.title = clean_bolds(entry['title'])
             article.link = clean_link(entry['link'])
             article.link_dirty = entry['link']
-            article.summary = entry['summary']
+            article.summary = clean_bolds(entry['summary'])
             article.published = parse_updated_date(entry['published_parsed'])
             article.updated = parse_updated_date(entry['updated_parsed'])
 

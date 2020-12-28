@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class="container">
+		{% for resource in resources %}
+		<a href="{{ resource.link }}">{{resource.title}}</a>
+			<p>{{resource.summary}}</p>
+		{% endfor %}
+	</div>
+
+{% endblock %}

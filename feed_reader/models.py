@@ -4,6 +4,9 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     last_updated = models.DateTimeField(null=True)
 
+    def __str__(self):
+        return self.name
+
 class Entry(models.Model):
     title = models.CharField(max_length=300)
     link = models.CharField(max_length=300, unique=True)
@@ -12,3 +15,4 @@ class Entry(models.Model):
     published = models.DateTimeField()
     updated = models.DateTimeField()
     category = models.ForeignKey('Category', on_delete=models.DO_NOTHING)
+    hidden = models.BooleanField(default=False)

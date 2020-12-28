@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'humanity_first_tracker',
     'articles',
+    'resources',
     'feed_reader.apps.FeedReaderConfig',
 ]
 

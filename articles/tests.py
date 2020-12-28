@@ -22,14 +22,18 @@ def create_article(category):
 class TestArticles(TestCase):
 
     def test_home_page(self):
-        category_name = 'fake category'
-        new_category = create_category(category_name)
-        new_article = create_article(new_category)
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        articles = []
+        for category in category_names:
+            new_category = create_category(category)
+            new_article = create_article(new_category)
+            articles.append(new_article)
 
         url = '/'
         response = self.client.get(url)
         response_str = str(response.content, 'utf-8')
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn(new_article.title, str(response.content, 'utf-8'))
-        self.assertIn(new_article.link, response_str)
+        for article in articles:
+            self.assertIn(article.title, str(response.content, 'utf-8'))
+            self.assertIn(article.link, response_str)
