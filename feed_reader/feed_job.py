@@ -46,7 +46,7 @@ def save_category_model(feed_data, category_name):
         category.last_updated = updated_date
         category.save()
     else:
-        if category.last_updated >= updated_date:
+        if category.last_updated and category.last_updated >= updated_date:
             return False
         else:
             category.last_updated = updated_date
