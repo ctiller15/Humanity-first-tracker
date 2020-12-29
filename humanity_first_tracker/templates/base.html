@@ -4,7 +4,9 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta 
+		name="viewport" 
+		content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link 
@@ -18,19 +20,21 @@
 
     <title>Humanity forward tracker</title>
   </head>
-  <body>
+  <body class="d-flex flex-column">
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/">HFT</a>
+			<a 
+	   			class="navbar-brand" 
+				href="/">HFT</a>
 			<div class="justify-content-end">
-				<ul class="navbar-nav">
-					<li class="nav-item">
+				<ul class="navbar-nav d-flex flex-row">
+					<li class="nav-item mx-2">
 						<a 
 		  					class="nav-link" 
 							href="/">Home</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item mx-2">
 						<a 
 		  					class="nav-link" 
 		 					href="/resources">Resources</a>
@@ -41,24 +45,25 @@
 		</div>
 	</nav>
 
+	<section class="page-content flex-grow-1">
 	{% block page_content %}{% endblock %}
+	</section>
 
-
-  	<footer class="footer navbar fixed-bottom navbar-expand-lg mt-5 py-3 bg-dark">
+  	<footer class="footer navbar navbar-expand-lg mt-3 bg-dark">
 		<div class="container-fluid navbar-collapse">
-			<ul class="navbar-nav mx-auto">
-				<li class="nav-item">
+			<ul class="navbar-nav mx-auto d-flex flex-row flex-wrap">
+				<li class="nav-item mx-4">
 					<a 
 		 				class="nav-link" 
 						href="https://github.com/ctiller15/Humanity-first-tracker">Github</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item mx-4">
 					<a class="nav-link" href="https://www.reddit.com/r/YangForPresidentHQ/">r/YangForPresidentHq</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item mx-4">
 					<a class="nav-link" href="https://movehumanityforward.com/">Humanity Forward</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item mx-4">
 					<a class="nav-link" href="https://yangspeaks.com/">Yang Speaks</a>
 				</li>
 			</ul>

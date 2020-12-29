@@ -2,63 +2,125 @@
 
 {% block page_content %}
 <div class="container">
-	<div class="row">
+	<div class="row hft-data">
 		{% autoescape off %}
 		<div class='col-sm-12 col-md-4'>
-			<div class='card'>
-				<div class='card-header d-flex justify-content-between align-items-end'>
-					<h2 class="fw-bold">Yang</h2>
-					<small>last updated:<br> {{ articles.yang.updated }}</small>
+			<div class='accordion'
+				id="yangAccordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header"
+		 				id="yangHeader">
+						<button class="accordion-button d-flex justify-content-between align-items-end"
+			  					type="button"
+		  						data-bs-toggle="collapse"
+		  						data-bs-target="#yangCollapse"
+		  						aria-expanded="true"
+		  						aria-controls="yangCollapse">
+							<h2 class="fw-bold mx-auto">Yang</h2>
+							<small class="text-start fst-italic">last updated:<br> {{ articles.yang.updated }}</small>
+						</button>
+					</h2>
+					<div id="yangCollapse"
+		  					class="accordion-collapse collapse show"
+		 					aria-labelledby="yangHeader"
+							data-bs-parent="#yangAccordion">
+						<div class="accordion-body">
+							<ul class="list-group list-group-flush collapse show"
+								aria-labelledby="yangCard"
+								id="collapseYang">
+							{% for article in articles.yang.articles %}
+								<li class="list-group-item">
+									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+									<p class="article-summary mb-3">{{article.summary}}</p>
+									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+									<a class="stretched-link" href={{ article.link }}
+									target='_blank'></a>
+								</li>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
 				</div>
-			<ul class="list-group list-group-flush">
-			{% for article in articles.yang.articles %}
-				<li class="list-group-item">
-					<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-					<p class="article-summary mb-3">{{article.summary}}</p>
-					<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-					<a class="stretched-link" href={{ article.link }}
-					target='_blank'></a>
-				</li>
-			{% endfor %}
-			</ul>
 			</div>
 		</div>
+
 		<div class='col-sm-12 col-md-4'>
-			<div class="card">
-			<div class='card-header d-flex justify-content-between align-items-end'>
-				<h2 class="fw-bold">Ubi</h2>
-				<small>last updated:<br> {{ articles.ubi.updated }}</small>
-			</div>
-			<ul class="list-group list-group-flush">
-			{% for article in articles.ubi.articles %}
-				<li class="list-group-item">
-					<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-					<p class="article-summary mb-3">{{article.summary}}</p>
-					<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-					<a class="stretched-link" href={{ article.link }}
-					target='_blank'></a>
-				</li>
-			{% endfor %}
-			</ul>
+			<div class='accordion'
+				id="ubiAccordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header"
+		 				id="ubiHeader">
+						<button class="accordion-button d-flex justify-content-between align-items-end"
+			  					type="button"
+		  						data-bs-toggle="collapse"
+		  						data-bs-target="#ubiCollapse"
+		  						aria-expanded="true"
+		  						aria-controls="ubiCollapse">
+							<h2 class="fw-bold mx-auto">Ubi</h2>
+							<small class="text-start fst-italic">last updated:<br> {{ articles.ubi.updated }}</small>
+						</button>
+					</h2>
+					<div id="ubiCollapse"
+		  					class="accordion-collapse collapse show"
+		 					aria-labelledby="ubiHeader"
+							data-bs-parent="#ubiAccordion">
+						<div class="accordion-body">
+							<ul class="list-group list-group-flush collapse show"
+								aria-labelledby="ubiCard"
+								id="collapseubi">
+							{% for article in articles.ubi.articles %}
+								<li class="list-group-item">
+									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+									<p class="article-summary mb-3">{{article.summary}}</p>
+									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+									<a class="stretched-link" href={{ article.link }}
+									target='_blank'></a>
+								</li>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+
 		<div class='col-sm-12 col-md-4'>
-			<div class="card">
-			<div class='card-header d-flex justify-content-between align-items-end'>
-				<h2 class="fw-bold">Automation</h2>
-				<small>last updated:<br> {{ articles.automation.updated }}</small>
-			</div>
-			<ul class="list-group list-group-flush">
-				{% for article in articles.automation.articles %}
-				<li class="list-group-item">
-					<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-					<p class="article-summary mb-3">{{article.summary}}</p>
-					<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-					<a class="stretched-link" href={{ article.link }}
-					target='_blank'></a>
-				</li>
-				{% endfor %}
-			</ul>
+			<div class='accordion'
+				id="automationAccordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header"
+		 				id="automationHeader">
+						<button class="accordion-button d-flex justify-content-between align-items-end"
+			  					type="button"
+		  						data-bs-toggle="collapse"
+		  						data-bs-target="#automationCollapse"
+		  						aria-expanded="true"
+		  						aria-controls="ubiCollapse">
+							<h2 class="fw-bold mx-auto">Automation</h2>
+							<small class="text-start fst-italic">last updated:<br> {{ articles.automation.updated }}</small>
+						</button>
+					</h2>
+					<div id="automationCollapse"
+		  					class="accordion-collapse collapse show"
+		 					aria-labelledby="automationHeader"
+							data-bs-parent="#automationAccordion">
+						<div class="accordion-body">
+							<ul class="list-group list-group-flush collapse show"
+								aria-labelledby="automationCard"
+								id="collapseautomation">
+							{% for article in articles.automation.articles %}
+								<li class="list-group-item">
+									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+									<p class="article-summary mb-3">{{article.summary}}</p>
+									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+									<a class="stretched-link" href={{ article.link }}
+									target='_blank'></a>
+								</li>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		{% endautoescape %}

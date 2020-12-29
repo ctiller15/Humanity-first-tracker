@@ -1,6 +1,6 @@
 body {
-	margin-bottom: 15em;
 	background-color: #F6F9F9;
+	height: 100%;
 }
 
 .card-header {
@@ -8,21 +8,50 @@ body {
 	color: #FFFFFF;
 }
 
-.card .list-group-item:hover {
+.hft-data .accordion-button {
+	background-color: #012958;
+	color: #FFFFFF;
+}
+
+.hft-data .accordion-button::after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23FFF' class='bi bi-caret-down-fill' viewBox='0 0 16 16'><path d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>");
+}
+
+.accordion-body {
+	padding: 0;
+}
+
+.accordion-body .list-group-item {
+	transition: background-color .2s, color .2s;
+}
+
+.accordion-body .list-group-item:hover {
 	background-color: #54B6C6;
 	color: #FFFFFF;
+}
+
+.accordion-button {
+	padding: 1em .5em;
 }
 
 .card .article-summary {
 	font-size: 1em;
 }
 
+.accordion-button small{
+	font-size: .7em;
+}
+
+.footer {
+	width: 100%;
+}
+
 footer a {
 	color: #FFFFFF;
 }
 
-@media screen and (min-width: 1080px) {
+/*@media screen and (min-width: 1080px) {
 	body {
-		margin-bottom: 6em;
+
 	}
-}
+}*/
