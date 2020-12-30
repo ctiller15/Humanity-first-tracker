@@ -25,12 +25,13 @@ feed_map = {
 }
 
 def parse_updated_date(date):
-    return datetime(date.tm_year, date.tm_mon, date.tm_mday, date.tm_hour, date.tm_min, date.tm_sec, tzinfo=pytz.UTC)
+    return datetime(date['tm_year'], date['tm_mon'], date['tm_mday'], date['tm_hour'], date['tm_min'], date['tm_sec'], tzinfo=pytz.UTC)
 
 def clean_link(dirty_link):
     # Regex removes google alert url wrapper.
     reg = r'(?<=https:\/\/w{3}\.google\.com\/url\?rct=j&sa=t&url=)(.*)(?=&ct=ga&cd=)'
-    return search(reg, dirty_link)[0]
+    results = search(reg, dirty_link)
+    return results[0] if results else dirty_link
 
 def clean_bolds(dirty_text):
     return dirty_text.replace('<b>', '').replace('</b>', '')
@@ -55,7 +56,7 @@ def save_category_model(feed_data, category_name):
     return True
 
 def save_entry_models(feed, category_name):
-    for entry in feed.entries:
+    for entry in feed['entries']:
         published_parsed_date = parse_updated_date(entry['published_parsed'])
         updated_parsed_date = parse_updated_date(entry['updated_parsed'])
         cleaned_link = clean_link(entry['link'])
@@ -64,7 +65,7 @@ def save_entry_models(feed, category_name):
 
         article, created = Entry.objects.get_or_create(
             link=cleaned_link, 
-            link_dirty=entry.link, 
+            link_dirty=entry['link'], 
             published=published_parsed_date, 
             updated=updated_parsed_date, 
             category_id=saved_category.id)
