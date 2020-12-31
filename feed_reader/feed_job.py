@@ -25,7 +25,7 @@ feed_map = {
 }
 
 def parse_updated_date(date):
-    return datetime(date['tm_year'], date['tm_mon'], date['tm_mday'], date['tm_hour'], date['tm_min'], date['tm_sec'], tzinfo=pytz.UTC)
+    return datetime(date.tm_year, date.tm_mon, date.tm_mday, date.tm_hour, date.tm_min, date.tm_sec, tzinfo=pytz.UTC)
 
 def clean_link(dirty_link):
     # Regex removes google alert url wrapper.
@@ -81,7 +81,6 @@ def save_entry_models(feed, category_name):
         article.save()
 
 def job():
-    
     for key in feed_map.keys():
         parsed_data_url = feed_map[key]['feed_url']
         parsed_data_category = feed_map[key]['results_category']

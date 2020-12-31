@@ -45,36 +45,15 @@ class TestFeedParserJob(TestCase):
 
         mockDictionary = {
             'feed': {
-                'updated_parsed': {
-                    'tm_year': test_date.year,
-                    'tm_mon': test_date.month,
-                    'tm_mday': test_date.day,
-                    'tm_hour': test_date.hour,
-                    'tm_min': test_date.minute,
-                    'tm_sec': test_date.second,
-                },
+                'updated_parsed': test_parsed_date.timetuple()
             },
             'entries': [
                 {
                     'title': 'Really cool title here.',
                     'link': f'{unique_id}&https://www.example.com',
                     'summary': 'Entry summary!!!',
-                    'published_parsed': {
-                        'tm_year': test_parsed_date.year,
-                        'tm_mon': test_parsed_date.month,
-                        'tm_mday': test_parsed_date.day,
-                        'tm_hour': test_parsed_date.hour,
-                        'tm_min': test_parsed_date.minute,
-                        'tm_sec': test_parsed_date.second,
-                    },
-                    'updated_parsed': {
-                        'tm_year': test_parsed_date.year,
-                        'tm_mon': test_parsed_date.month,
-                        'tm_mday': test_parsed_date.day,
-                        'tm_hour': test_parsed_date.hour,
-                        'tm_min': test_parsed_date.minute,
-                        'tm_sec': test_parsed_date.second,
-                    }
+                    'published_parsed': test_parsed_date.timetuple(),
+                    'updated_parsed': test_parsed_date.timetuple()
                 }
             ]
 
