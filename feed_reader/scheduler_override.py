@@ -3,6 +3,7 @@ import time
 import datetime
 import threading
 from schedule import Scheduler
+from traceback import format_exc
 
 logger = logging.getLogger('schedule')
 

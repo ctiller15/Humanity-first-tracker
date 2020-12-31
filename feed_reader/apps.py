@@ -8,7 +8,7 @@ class FeedReaderConfig(AppConfig):
     def ready(self):
         if os.environ.get('RUN_MAIN', None) != 'true':
             from feed_reader.feed_job import job
-            scheduler = SafeScheduler()
-            scheduler.every(15).seconds.do(job)
+            scheduler = Scheduler()
+            scheduler.every(15).minutes.do(job)
 
             scheduler.run_continuously()
