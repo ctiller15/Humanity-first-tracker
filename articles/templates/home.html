@@ -2,6 +2,44 @@
 
 {% block page_content %}
 <div class="container">
+
+	<h3 class="m-2 text-center">Showing articles from {{ display_message | safe }}</h3>
+
+	<form class="row row-cols-lg-auto align-items-center justify-content-center"
+	   action="{% url 'search_results' %}"
+	   	method="get">
+		<div class="col-12 m-2">
+			<label class="visually-hidden">From date</label>
+			<div class="input-group">
+				<div class="input-group-text">From</div>
+				<input 
+					name="datefrom" 
+		   			class="form-control" 
+					type="date" 
+					placeholder="From...">
+			</div>
+		</div>
+
+		<div class="col-12 m-2">
+			<label class="visually-hidden">To date</label>
+			<div class="input-group">
+				<div class="input-group-text">To</div>
+				<input 
+					name="dateto" 
+					class="form-control" 
+					type="date" 
+					placeholder="To...">
+			</div>
+		</div>
+
+		<div class="col-12 m-2 d-flex justify-content-center">
+			<button 
+				class="btn btn-primary fw-bold search-button" 
+				type='submit'>Get the data</button>
+		</div>
+
+	</form>
+
 	<div class="row hft-data">
 		{% autoescape off %}
 		<div class='col-sm-12 col-md-4'>
@@ -28,15 +66,21 @@
 							<ul class="list-group list-group-flush collapse show"
 								aria-labelledby="yangCard"
 								id="collapseYang">
-							{% for article in articles.yang.articles %}
-								<li class="list-group-item">
-									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-									<p class="article-summary mb-3">{{article.summary}}</p>
-									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-									<a class="stretched-link" href={{ article.link }}
-									target='_blank'></a>
-								</li>
-							{% endfor %}
+							{% if articles.yang.articles|length > 0 %}
+								{% for article in articles.yang.articles %}
+									<li class="list-group-item">
+										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+										<p class="article-summary mb-3">{{article.summary}}</p>
+										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+										<a 
+			  								class="stretched-link" 
+			 								href={{ article.link }}
+											target='_blank'></a>
+									</li>
+								{% endfor %}
+							{% else %}
+								<h3 class="text-center p-5">We don't have the data...</h3>
+							{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -68,15 +112,19 @@
 							<ul class="list-group list-group-flush collapse show"
 								aria-labelledby="ubiCard"
 								id="collapseubi">
-							{% for article in articles.ubi.articles %}
-								<li class="list-group-item">
-									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-									<p class="article-summary mb-3">{{article.summary}}</p>
-									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-									<a class="stretched-link" href={{ article.link }}
-									target='_blank'></a>
-								</li>
-							{% endfor %}
+							{% if articles.ubi.articles|length > 0 %}
+								{% for article in articles.ubi.articles %}
+									<li class="list-group-item">
+										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+										<p class="article-summary mb-3">{{article.summary}}</p>
+										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+										<a class="stretched-link" href={{ article.link }}
+										target='_blank'></a>
+									</li>
+								{% endfor %}
+							{% else %}
+								<h3 class="text-center p-5">We don't have the data...</h3>
+							{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -108,15 +156,21 @@
 							<ul class="list-group list-group-flush collapse show"
 								aria-labelledby="automationCard"
 								id="collapseautomation">
-							{% for article in articles.automation.articles %}
-								<li class="list-group-item">
-									<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-									<p class="article-summary mb-3">{{article.summary}}</p>
-									<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-									<a class="stretched-link" href={{ article.link }}
-									target='_blank'></a>
-								</li>
-							{% endfor %}
+							{% if articles.ubi.articles|length > 0 %}
+								{% for article in articles.automation.articles %}
+									<li class="list-group-item">
+										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+										<p class="article-summary mb-3">{{article.summary}}</p>
+										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+										<a 
+			  								class="stretched-link" 
+			 								href={{ article.link }}
+											target='_blank'></a>
+									</li>
+								{% endfor %}
+							{% else %}
+								<h3 class="text-center p-5">We don't have the data...</h3>
+							{% endif %}
 							</ul>
 						</div>
 					</div>

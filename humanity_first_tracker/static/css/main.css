@@ -3,6 +3,16 @@ body {
 	height: 100%;
 }
 
+.search-button {
+	background-color: #F96262;
+	color: #FFFFFF;
+	border: 0 solid #e5e7eb;
+}
+
+.search-button:hover {
+	background-color: #FA9393;
+}
+
 .card-header {
 	background-color: #012958;
 	color: #FFFFFF;

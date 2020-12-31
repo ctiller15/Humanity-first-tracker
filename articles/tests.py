@@ -71,3 +71,131 @@ class TestArticles(TestCase):
         for article in old_articles:
             self.assertNotIn(article.title, response_str)
             self.assertNotIn(article.link, response_str)
+
+    def test_search_renders_within_date_range(self):
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        articles = []
+        start_date = '2020-12-28'
+        end_date = '2020-12-30'
+
+        valid_date = datetime(2020, 12, 29, tzinfo=pytz.utc)
+        invalid_date = datetime(2020, 12, 15, tzinfo=pytz.utc)
+
+        for category in category_names:
+            new_category = create_category(category)
+            new_article = create_article(new_category, valid_date)
+            articles.append(new_article)
+
+        invalid_articles = []
+        for category in category_names:
+            new_article = create_article(new_category, invalid_date)
+            invalid_articles.append(new_article)
+
+        response = self.client.get(f'/search_results?datefrom={start_date}&dateto={end_date}')
+        response_str = str(response.content, 'utf-8')
+
+        self.assertEqual(response.status_code, 200)
+        for article in articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+        for article in invalid_articles:
+            self.assertNotIn(article.title, response_str)
+            self.assertNotIn(article.link, response_str)
+
+    def test_renders_all_past_articles_if_from_date_not_specified(self):
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        articles = []
+        end_date = '2020-12-30'
+
+        valid_date = datetime(2020, 12, 29, tzinfo=pytz.utc)
+        invalid_date = datetime(2020, 12, 15, tzinfo=pytz.utc)
+
+        for category in category_names:
+            new_category = create_category(category)
+            new_article = create_article(new_category, valid_date)
+            articles.append(new_article)
+
+        old_articles = []
+        for category in category_names:
+            new_article = create_article(new_category, invalid_date)
+            old_articles.append(new_article)
+
+        response = self.client.get(f'/search_results?dateto={end_date}')
+        response_str = str(response.content, 'utf-8')
+
+        self.assertEqual(response.status_code, 200)
+        for article in articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+        for article in old_articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+    def test_renders_all_future_articles_if_to_date_not_specified(self):
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        categories = []
+        articles = []
+        start_date = '2020-12-28'
+        end_date = '2020-12-30'
+
+        future_date = datetime(2020, 12, 30, tzinfo=pytz.utc)
+        valid_date = datetime(2020, 12, 29, tzinfo=pytz.utc)
+        invalid_date = datetime(2020, 12, 15, tzinfo=pytz.utc)
+
+        for category in category_names:
+            new_category = create_category(category)
+            categories.append(new_category)
+            new_article = create_article(new_category, valid_date)
+            articles.append(new_article)
+
+        old_articles = []
+        for category in categories:
+            new_article = create_article(category, invalid_date)
+            old_articles.append(new_article)
+
+        future_articles = []
+        for category in categories:
+            new_article = create_article(category, future_date)
+            future_articles.append(new_article)
+
+        response = self.client.get(f'/search_results?datefrom={start_date}')
+        response_str = str(response.content, 'utf-8')
+
+        self.assertEqual(response.status_code, 200)
+        for article in articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+        for article in old_articles:
+            self.assertNotIn(article.title, response_str)
+            self.assertNotIn(article.link, response_str)
+
+        for article in future_articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+    def test_search_does_not_error_with_invalid_dates(self):
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        articles = []
+        start_date = 'gerwgerer43'
+        end_date = 'g54gerfvsdgf43'
+
+        valid_date = datetime(2020, 12, 29, tzinfo=pytz.utc)
+        invalid_date = datetime(2020, 12, 15, tzinfo=pytz.utc)
+
+        for category in category_names:
+            new_category = create_category(category)
+            new_article = create_article(new_category, valid_date)
+            articles.append(new_article)
+
+        invalid_articles = []
+        for category in category_names:
+            new_article = create_article(new_category, invalid_date)
+            invalid_articles.append(new_article)
+
+        response = self.client.get(f'/search_results?datefrom={start_date}&dateto={end_date}')
+        response_str = str(response.content, 'utf-8')
+
+        self.assertEqual(response.status_code, 200)
