@@ -1,11 +1,13 @@
 from decouple import config
 import feedparser
+import opengraph_parse
 from feed_reader.models import Category, Entry
 from datetime import datetime
 from re import search
 import pytz
 
 feed_map = {
+    # thinking on it, these should all be refactored to be defined at the database level.
     'andrew_yang': {
         'feed_url': config('RSS_FEED_ANDREW_YANG'),
         'results_category': 'andrew_yang'
@@ -27,9 +29,14 @@ feed_map = {
 def parse_updated_date(date):
     return datetime(date.tm_year, date.tm_mon, date.tm_mday, date.tm_hour, date.tm_min, date.tm_sec, tzinfo=pytz.UTC)
 
+def get_site_url(clean_link):
+    reg = r'(?<=https:\/\/)[^\/]*'
+    results = search(reg, clean_link)
+    return results[0] if results else ''
+
 def clean_link(dirty_link):
     # Regex removes google alert url wrapper.
-    reg = r'(?<=https:\/\/w{3}\.google\.com\/url\?rct=j&sa=t&url=)(.*)(?=&ct=ga&cd=)'
+    reg = r'(?<=https:\/\/w{3}\.google\.com\/url\?rct=j&sa=t&url=)(.*?)(?=&ct=ga&cd=)'
     results = search(reg, dirty_link)
     return results[0] if results else dirty_link
 
@@ -61,6 +68,8 @@ def save_entry_models(feed, category_name):
         updated_parsed_date = parse_updated_date(entry['updated_parsed'])
         cleaned_link = clean_link(entry['link'])
 
+        og_metadata = opengraph_parse.parse_page(cleaned_link, ["og:image", "og:title", "og:site_name"])
+
         saved_category = Category.objects.get(name=category_name)
 
         article, created = Entry.objects.get_or_create(
@@ -72,11 +81,17 @@ def save_entry_models(feed, category_name):
 
         if created:
             article.title = clean_bolds(entry['title'])
-            article.link = clean_link(entry['link'])
+            article.link = cleaned_link
             article.link_dirty = entry['link']
+            article.site_url = get_site_url(cleaned_link)
             article.summary = clean_bolds(entry['summary'])
             article.published = parse_updated_date(entry['published_parsed'])
             article.updated = parse_updated_date(entry['updated_parsed'])
+
+            if og_metadata is not False:
+                article.og_image = og_metadata['og:image'] or None if 'og:image' in og_metadata.keys() else None
+                article.og_title = og_metadata['og:title'] or None if 'og:title' in og_metadata.keys() else None
+                article.og_site_name = og_metadata['og:site_name'] or None if 'og:site_name' in og_metadata.keys() else None
 
         article.save()
 

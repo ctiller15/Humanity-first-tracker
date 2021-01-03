@@ -3,18 +3,19 @@
 {% block page_content %}
 <div class="container">
 
+
 	<h3 class="m-2 text-center">Showing articles from {{ display_message | safe }}</h3>
 
 	<form class="row row-cols-lg-auto align-items-center justify-content-center"
 	   action="{% url 'search_results' %}"
-	   	method="get">
+		method="get">
 		<div class="col-12 m-2">
 			<label class="visually-hidden">From date</label>
 			<div class="input-group">
 				<div class="input-group-text">From</div>
 				<input 
 					name="datefrom" 
-		   			class="form-control" 
+					class="form-control" 
 					type="date" 
 					placeholder="From...">
 			</div>
@@ -40,144 +41,197 @@
 
 	</form>
 
-	<div class="row hft-data">
-		{% autoescape off %}
-		<div class='col-sm-12 col-md-4'>
-			<div class='accordion'
-				id="yangAccordion">
-				<div class="accordion-item">
-					<h2 class="accordion-header"
-		 				id="yangHeader">
-						<button class="accordion-button d-flex justify-content-between align-items-end"
-			  					type="button"
-		  						data-bs-toggle="collapse"
-		  						data-bs-target="#yangCollapse"
-		  						aria-expanded="true"
-		  						aria-controls="yangCollapse">
-							<h2 class="fw-bold mx-auto">Yang</h2>
-							<small class="text-start fst-italic">last updated:<br> {{ articles.yang.updated }}</small>
-						</button>
-					</h2>
-					<div id="yangCollapse"
-		  					class="accordion-collapse collapse show"
-		 					aria-labelledby="yangHeader"
-							data-bs-parent="#yangAccordion">
-						<div class="accordion-body">
-							<ul class="list-group list-group-flush collapse show"
-								aria-labelledby="yangCard"
-								id="collapseYang">
-							{% if articles.yang.articles|length > 0 %}
-								{% for article in articles.yang.articles %}
-									<li class="list-group-item">
-										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-										<p class="article-summary mb-3">{{article.summary}}</p>
-										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-										<a 
-			  								class="stretched-link" 
-			 								href={{ article.link }}
-											target='_blank'></a>
-									</li>
-								{% endfor %}
-							{% else %}
-								<h3 class="text-center p-5">We don't have the data...</h3>
-							{% endif %}
-							</ul>
+	<div class="row">
+
+		<div class="row hft-data col-sm-12 col-lg-9 container g-2">
+			{% autoescape off %}
+			<div class='col-sm-12 col-md-4'>
+				<div class='accordion'
+					id="yangAccordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header"
+							id="yangHeader">
+							<button class="accordion-button d-flex justify-content-between align-items-end"
+									type="button"
+									data-bs-toggle="collapse"
+									data-bs-target="#yangCollapse"
+									aria-expanded="true"
+									aria-controls="yangCollapse">
+								<h2 class="fw-bold mx-auto">Yang</h2>
+								<small class="text-start fst-italic">last updated:<br> {{ articles.yang.updated }}</small>
+							</button>
+						</h2>
+						<div id="yangCollapse"
+								class="accordion-collapse collapse show"
+								aria-labelledby="yangHeader"
+								data-bs-parent="#yangAccordion">
+							<div class="accordion-body">
+								<ul class="list-group list-group-flush collapse show"
+									aria-labelledby="yangCard"
+									id="collapseYang">
+								{% if articles.yang.articles|length > 0 %}
+									{% for article in articles.yang.articles %}
+										<li class="list-group-item">
+											{% if article.og_image is not None %}
+												<div class="col-xs-12 mb-3">
+													<img 
+														class="img-fluid rounded" 
+														src="{{ article.og_image }}">
+												</div>
+											{% endif %}
+											<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+											<p class="article-summary mb-3">{{article.summary}}</p>
+											{% if article.og_site_name is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.og_site_name}}</small>
+											{% elif article.site_url is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.site_url}}</small>
+											{% endif %}
+
+											<small class="d-block col-xs-12 article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+											<a 
+												class="stretched-link" 
+												href={{ article.link }}
+												target='_blank'></a>
+										</li>
+									{% endfor %}
+								{% else %}
+									<h3 class="text-center p-5">We don't have the data...</h3>
+								{% endif %}
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class='col-sm-12 col-md-4'>
+				<div class='accordion'
+					id="ubiAccordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header"
+							id="ubiHeader">
+							<button class="accordion-button d-flex justify-content-between align-items-end"
+									type="button"
+									data-bs-toggle="collapse"
+									data-bs-target="#ubiCollapse"
+									aria-expanded="true"
+									aria-controls="ubiCollapse">
+								<h2 class="fw-bold mx-auto">Ubi</h2>
+								<small class="text-start fst-italic">last updated:<br> {{ articles.ubi.updated }}</small>
+							</button>
+						</h2>
+						<div id="ubiCollapse"
+								class="accordion-collapse collapse show"
+								aria-labelledby="ubiHeader"
+								data-bs-parent="#ubiAccordion">
+							<div class="accordion-body">
+								<ul class="list-group list-group-flush collapse show"
+									aria-labelledby="ubiCard"
+									id="collapseubi">
+								{% if articles.ubi.articles|length > 0 %}
+									{% for article in articles.ubi.articles %}
+										<li class="list-group-item">
+											{% if article.og_image is not None %}
+												<div class="col-xs-12 mb-3">
+													<img 
+														class="img-fluid rounded" 
+														src="{{ article.og_image }}">
+												</div>
+											{% endif %}
+											<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+											<p class="article-summary mb-3">{{article.summary}}</p>
+											{% if article.og_site_name is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.og_site_name}}</small>
+											{% elif article.site_url is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.site_url}}</small>
+											{% endif %}
+
+											<small class="d-block article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+											<a class="stretched-link" href={{ article.link }}
+											target='_blank'></a>
+										</li>
+									{% endfor %}
+								{% else %}
+									<h3 class="text-center p-5">We don't have the data...</h3>
+								{% endif %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class='col-sm-12 col-md-4'>
+				<div class='accordion'
+					id="automationAccordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header"
+							id="automationHeader">
+							<button class="accordion-button d-flex justify-content-between align-items-end"
+									type="button"
+									data-bs-toggle="collapse"
+									data-bs-target="#automationCollapse"
+									aria-expanded="true"
+									aria-controls="ubiCollapse">
+								<h2 class="fw-bold mx-auto">Automation</h2>
+								<small class="text-start fst-italic">last updated:<br> {{ articles.automation.updated }}</small>
+							</button>
+						</h2>
+						<div id="automationCollapse"
+								class="accordion-collapse collapse show"
+								aria-labelledby="automationHeader"
+								data-bs-parent="#automationAccordion">
+							<div class="accordion-body">
+								<ul class="list-group list-group-flush collapse show"
+									aria-labelledby="automationCard"
+									id="collapseautomation">
+								{% if articles.ubi.articles|length > 0 %}
+									{% for article in articles.automation.articles %}
+										<li class="list-group-item">
+											{% if article.og_image is not None %}
+												<div class="col-xs-12 mb-3">
+													<img 
+														class="img-fluid rounded" 
+														src="{{ article.og_image }}">
+												</div>
+											{% endif %}
+											<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
+											<p class="article-summary mb-3">{{article.summary}}</p>
+											{% if article.og_site_name is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.og_site_name}}</small>
+											{% elif article.site_url is not None %}
+												<small class="d-block col-xs-12 fw-bold">{{article.site_url}}</small>
+											{% endif %}
+
+											<small class="d-block article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
+											<a 
+												class="stretched-link" 
+												href={{ article.link }}
+												target='_blank'></a>
+										</li>
+									{% endfor %}
+								{% else %}
+									<h3 class="text-center p-5">We don't have the data...</h3>
+								{% endif %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endautoescape %}
 		</div>
 
-		<div class='col-sm-12 col-md-4'>
-			<div class='accordion'
-				id="ubiAccordion">
-				<div class="accordion-item">
-					<h2 class="accordion-header"
-		 				id="ubiHeader">
-						<button class="accordion-button d-flex justify-content-between align-items-end"
-			  					type="button"
-		  						data-bs-toggle="collapse"
-		  						data-bs-target="#ubiCollapse"
-		  						aria-expanded="true"
-		  						aria-controls="ubiCollapse">
-							<h2 class="fw-bold mx-auto">Ubi</h2>
-							<small class="text-start fst-italic">last updated:<br> {{ articles.ubi.updated }}</small>
-						</button>
-					</h2>
-					<div id="ubiCollapse"
-		  					class="accordion-collapse collapse show"
-		 					aria-labelledby="ubiHeader"
-							data-bs-parent="#ubiAccordion">
-						<div class="accordion-body">
-							<ul class="list-group list-group-flush collapse show"
-								aria-labelledby="ubiCard"
-								id="collapseubi">
-							{% if articles.ubi.articles|length > 0 %}
-								{% for article in articles.ubi.articles %}
-									<li class="list-group-item">
-										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-										<p class="article-summary mb-3">{{article.summary}}</p>
-										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-										<a class="stretched-link" href={{ article.link }}
-										target='_blank'></a>
-									</li>
-								{% endfor %}
-							{% else %}
-								<h3 class="text-center p-5">We don't have the data...</h3>
-							{% endif %}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="col-lg-3 d-none d-lg-block d-xl-block g-3">
+		<a 
+			class="twitter-timeline" 
+			href="https://twitter.com/AndrewYang?ref_src=twsrc%5Etfw">Tweets by AndrewYang</a> 
+		<script 
+			async 
+			src="https://platform.twitter.com/widgets.js" 
+			charset="utf-8"></script> 
 		</div>
 
-		<div class='col-sm-12 col-md-4'>
-			<div class='accordion'
-				id="automationAccordion">
-				<div class="accordion-item">
-					<h2 class="accordion-header"
-		 				id="automationHeader">
-						<button class="accordion-button d-flex justify-content-between align-items-end"
-			  					type="button"
-		  						data-bs-toggle="collapse"
-		  						data-bs-target="#automationCollapse"
-		  						aria-expanded="true"
-		  						aria-controls="ubiCollapse">
-							<h2 class="fw-bold mx-auto">Automation</h2>
-							<small class="text-start fst-italic">last updated:<br> {{ articles.automation.updated }}</small>
-						</button>
-					</h2>
-					<div id="automationCollapse"
-		  					class="accordion-collapse collapse show"
-		 					aria-labelledby="automationHeader"
-							data-bs-parent="#automationAccordion">
-						<div class="accordion-body">
-							<ul class="list-group list-group-flush collapse show"
-								aria-labelledby="automationCard"
-								id="collapseautomation">
-							{% if articles.ubi.articles|length > 0 %}
-								{% for article in articles.automation.articles %}
-									<li class="list-group-item">
-										<h5 class="article-title fw-bold mb-3">{{article.title}}</h5>
-										<p class="article-summary mb-3">{{article.summary}}</p>
-										<small class="article-updated fst-italic fw-lighter">updated: {{article.updated}}</small>
-										<a 
-			  								class="stretched-link" 
-			 								href={{ article.link }}
-											target='_blank'></a>
-									</li>
-								{% endfor %}
-							{% else %}
-								<h3 class="text-center p-5">We don't have the data...</h3>
-							{% endif %}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		{% endautoescape %}
 	</div>
 </div>
 {% endblock %}

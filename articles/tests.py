@@ -20,8 +20,52 @@ def create_article(category, date=None):
     new_entry.save()
     return new_entry 
 
+def create_article_og_metadata(category, date=None):
+    today_date = date if date else datetime.now().replace(tzinfo=pytz.UTC)
+    unique_identifier = uuid4()
+
+    title = f'title{unique_identifier}'
+    link = f'link{unique_identifier}'
+    link_dirty = f'link_dirty{unique_identifier}'
+
+    og_image = f'https://image/{unique_identifier}'
+    og_title = f'og_title_dummy{unique_identifier}'
+    og_site_name = f'https://og_site_name{unique_identifier}'
+
+    new_entry = Entry.objects.create(title=title, link=link, link_dirty=link_dirty, category=category, published=today_date, updated=today_date, og_image=og_image, og_title=og_title, og_site_name=og_site_name)
+    new_entry.save()
+    return new_entry 
+    
 # Split into unit tests and integration tests
 class TestArticles(TestCase):
+
+    def test_home_page_og_metadata(self):
+        category_names = ['ubi', 'andrew_yang', 'automation']
+        articles = []
+        articles_with_metadata = []
+
+
+        for category in category_names:
+            new_category = create_category(category)
+            new_article_with_metadata = create_article_og_metadata(new_category)
+            new_article_without_metadata = create_article(new_category)
+            articles_with_metadata.append(new_article_with_metadata)
+            articles.append(new_article_without_metadata)
+
+        url = '/'
+        response = self.client.get(url)
+        response_str = str(response.content, 'utf-8')
+
+        self.assertEqual(response.status_code, 200)
+        for article in articles:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+
+        for article in articles_with_metadata:
+            self.assertIn(article.title, response_str)
+            self.assertIn(article.link, response_str)
+            self.assertIn(article.og_site_name, response_str)
+            self.assertIn(article.og_image, response_str)
 
     def test_home_page(self):
         category_names = ['ubi', 'andrew_yang', 'automation']
