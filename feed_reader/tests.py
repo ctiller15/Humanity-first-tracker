@@ -63,6 +63,10 @@ class TestFeedParser(SimpleTestCase):
                 self.assertEqual(output, clean_link(test_case))
 
 class TestFeedParserJob(TestCase):
+    mockDictionaryWithoutUpdatedDate = {
+        'feed': {}
+    }
+
     def mockFeedParser(data_url):
         unique_id = uuid4()
         test_date = datetime(2020, 12, 12, 20, 12, 30, 15)
@@ -116,3 +120,12 @@ class TestFeedParserJob(TestCase):
         self.assertNotIn('', entry_site_names)
         self.assertNotIn('', entry_titles)
         self.assertNotIn('', entry_images)
+
+    @patch('feedparser.parse', MagicMock(return_value=mockDictionaryWithoutUpdatedDate))
+    @patch('opengraph_parse.parse_page', MagicMock(return_value=mockOpenGraphParseReturnWithoutTitles))
+    def test_job_does_not_error_when_updated_date_empty(self):
+        try:
+            job()
+        except  KeyError:
+            self.fail('job() raised KeyError unexpectedly!')
+

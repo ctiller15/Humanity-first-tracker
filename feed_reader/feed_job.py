@@ -44,23 +44,29 @@ def clean_bolds(dirty_text):
     return dirty_text.replace('<b>', '').replace('</b>', '')
 
 def save_category_model(feed_data, category_name):
-    date_parsed = feed_data['feed']['updated_parsed']
+    date_parsed = None
+    if feed_data['feed']:
+        date_parsed = feed_data['feed']['updated_parsed'] if 'updated_parsed' in feed_data['feed'] else None
     
     category, created = Category.objects.get_or_create(name=category_name)
+    
+    if date_parsed:
+        updated_date = parse_updated_date(date_parsed)
 
-    updated_date = parse_updated_date(date_parsed)
-
-    if created:
-        category.last_updated = updated_date
-        category.save()
-    else:
-        if category.last_updated and category.last_updated >= updated_date:
-            return False
-        else:
+    if(date_parsed):
+        if created:
             category.last_updated = updated_date
             category.save()
+        else:
+            if category.last_updated and category.last_updated >= updated_date:
+                return False
+            else:
+                category.last_updated = updated_date
+                category.save()
 
-    return True
+        return True
+    else:
+        return False
 
 def save_entry_models(feed, category_name):
     for entry in feed['entries']:
