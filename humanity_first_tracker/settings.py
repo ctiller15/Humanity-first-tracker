@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'articles',
     'resources',
     'feed_reader.apps.FeedReaderConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+CRONJOBS = [
+    ('*/15 * * * *', 'feed_reader.feed_job.job', '>> /tmp/humanity_first_job.log'),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

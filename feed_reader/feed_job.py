@@ -81,9 +81,11 @@ def save_entry_models(feed, category_name):
         article, created = Entry.objects.get_or_create(
             link=cleaned_link, 
             link_dirty=entry['link'], 
-            published=published_parsed_date, 
-            updated=updated_parsed_date, 
-            category_id=saved_category.id)
+            defaults = { 
+                'published': published_parsed_date, 
+                'updated': updated_parsed_date, 
+                'category_id': saved_category.id
+            })
 
         if created:
             article.title = clean_bolds(entry['title'])
